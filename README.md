@@ -68,4 +68,4 @@ foreach $Lfile (@ARGV){ ## unsel files
 
 $pm->wait_all_children;
 ```
-
+After starting this, I decided to run a second set with m = 0.2 (that might seem high, but this is between neighboring demes and there are many demes spanning the whole space so the flux of genes across the whole system shouldn't be too crazy). I am not so much interested in different migration rates per se as this should just change the scale of everything, but I want to verify that that is true for geographic clines and verify that there really isn't much of an effect in terms of variance in clines for genomic clines.
