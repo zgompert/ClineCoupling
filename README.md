@@ -11,4 +11,61 @@ Our plan is to build on this past work by considering hybrid zones involving a r
 
 # Simulations
 
-We are using [dfuse](https://www.uwyo.edu/buerkle/software/dfuse/) to simulation hybrid zones. The model was described in [Lindtke 2015](https://onlinelibrary.wiley.com/doi/10.1111/evo.12725). I modified the source code to allow for simple underdominance and to have only a single chromosome (see [main_dfuse.c](main_dfuse.c)). 
+We are using [dfuse](https://www.uwyo.edu/buerkle/software/dfuse/) to simulation hybrid zones. The model was described in [Lindtke 2015](https://onlinelibrary.wiley.com/doi/10.1111/evo.12725). I modified the source code to allow for simple underdominance and to have only a single chromosome (see [main_dfuse.c](main_dfuse.c), [func_dfuse.c](func_dfuse.c), and [head_dfuse.h](head_dfuse.h)). This software runs individual-based simulations of secondary contact using a stepping stone model and tracks ancestry junctions.
+
+Constant conditions for the simulations are as follows: number of demes = 110, number of generations = 2000 (log every 500), number of chromsomes = 1, migration rate between neighboring demes = 0.1, selection type = underdominance, number of genetic markers = 51.
+
+I am varying theta and the number of loci (in all pairwise combinations). For theta, I used 0.1, 0.5, 0.9, 1, 1.1, 1.5, and 2. For L, I used 2, 10, 100, 200, 500, and 1000. Selected loci were placed evenly along the chromosome starting at the end (i.e., there is a selected locus at each end of the chromosome). This gives r = 1/(L-1). I then used theta = s/r to compute the per locus s for each simulation (the same for all loci). I ran 10 replicates of each set of simulation conditions = 7 * 6 * 10 = 300 simulations.
+
+Here is the main submission script (in /uufs/chpc.utah.edu/common/home/gompert-group2/projects/coupling_sims/):
+
+```bash
+#!/bin/sh 
+#SBATCH --time=240:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks=12
+#SBATCH --account=gompert-np
+#SBATCH --partition=gompert-np
+#SBATCH --job-name=dfuse
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user=zach.gompert@usu.edu
+
+module load gsl
+
+cd /uufs/chpc.utah.edu/common/home/gompert-group2/projects/coupling_sims
+
+perl fork_dfuse_main.pl unsel_*
+```
+Which runs:
+
+```perl
+#!/usr/bin/perl
+#
+#
+
+use Parallel::ForkManager;
+my $max = 80;
+my $pm = Parallel::ForkManager->new($max);
+
+@theta = (0.1,0.5,0.9,1,1.1,1.5,2); ## theta = s/r = coupling coefficient, not summed coupling coefficient
+
+foreach $Lfile (@ARGV){ ## unsel files
+	$Lfile =~ m/_(\d+)/ or die "failed to match number of Loci = L\n";
+	$L = $1;
+	foreach $th (@theta){
+		$r = 1 / ($L-1); ## $r between neighboring loci
+		$s = $th * $r; ## theta = s/r, thus s = theta * r
+		foreach $j (0..9){ ## reps
+			sleep 2;	
+			$pm->start and next;
+			$out = "o_d110_L$L"."_theta$th"."_rep$j";
+			system "~/bin/dfuse_src/dfuse -d demefile_110 -s $Lfile -o $out -g 2000 -c $s -G 500 -m 0.1\n";
+
+			$pm->finish;
+		}
+	}
+}
+
+$pm->wait_all_children;
+```
+
