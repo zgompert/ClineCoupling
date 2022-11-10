@@ -69,3 +69,9 @@ foreach $Lfile (@ARGV){ ## unsel files
 $pm->wait_all_children;
 ```
 After starting this, I decided to run a second set with m = 0.2 (that might seem high, but this is between neighboring demes and there are many demes spanning the whole space so the flux of genes across the whole system shouldn't be too crazy). I am not so much interested in different migration rates per se as this should just change the scale of everything, but I want to verify that that is true for geographic clines and verify that there really isn't much of an effect in terms of variance in clines for genomic clines.
+
+# Simulation results: cline in hybrid indexes
+
+As a first summary of the simulation results, I plotted geographic clines in the mean hybrid index for each site CODE. The results are shown HERE. Each panel is a deparate set of simulation conditions; the title gives the number of demes (110) and $\theta$ (migration). Each line is a replicate (not differnt loci) and black versus gray denote 2000 versus 1500 generations. Key take homes are that 2000 generations appears to be sufficient to reach equilibirum (not notably different from 1500), and thus will work for downstream analyses, and that the overall shape of the hybrid index cline is consistent across replicates and looks to be closely tied to $\theta$.
+
+
