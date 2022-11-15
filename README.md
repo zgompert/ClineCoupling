@@ -15,7 +15,7 @@ We are using [dfuse](https://www.uwyo.edu/buerkle/software/dfuse/) to simulation
 
 Constant conditions for the simulations are as follows: number of demes = 110, number of generations = 2000 (log every 500), number of chromsomes = 1, migration rate between neighboring demes = 0.1, selection type = underdominance, number of genetic markers = 51.
 
-I am varying theta and the number of loci (in all pairwise combinations). For $\theta$, I used 0.1, 0.5, 0.9, 1, 1.1, 1.5, and 2. For $L$, I used 2, 10, 100, 200, 500, and 1000. Selected loci were placed evenly along the chromosome starting at the end (i.e., there is a selected locus at each end of the chromosome). This gives $r = 1/(L-1)$. I then used $\theta = s/r$ to compute the per locus s for each simulation (the same for all loci). I ran 10 replicates of each set of simulation conditions = 7 * 6 * 10 = 300 simulations.
+I am varying theta and the number of loci (in all pairwise combinations). For $\theta$, I used 0.1, 0.5, 0.9, 1, 1.1, 1.5, and 2. For $L$, I used 2, 10, 100, 200, 500, and 1000. Selected loci were placed evenly along the chromosome starting at the end (i.e., there is a selected locus at each end of the chromosome). This gives $r = 1/(L-1)$. I then used $\theta = s/r$ to compute the per locus s for each simulation (the same for all loci). I ran 10 replicates of each set of simulation conditions = 10 * 6 * 10 = 600 simulations (*2 for migration rate, but note that some are not well defined as fitness would have to be less than 0 to get $\theta$ given $L$, so really we have 1140 simulations).
 
 Here is the main submission script (in /uufs/chpc.utah.edu/common/home/gompert-group2/projects/coupling_sims/):
 
@@ -47,7 +47,7 @@ use Parallel::ForkManager;
 my $max = 80;
 my $pm = Parallel::ForkManager->new($max);
 
-@theta = (0.1,0.5,0.9,1,1.1,1.5,2); ## theta = s/r = coupling coefficient, not summed coupling coefficient
+@theta = (0.05,0.1,0.3,0.5,0.7,0.9,1,1.1,1.5,2); ## theta = s/r = coupling coefficient, not summed coupling coefficient
 
 foreach $Lfile (@ARGV){ ## unsel files
 	$Lfile =~ m/_(\d+)/ or die "failed to match number of Loci = L\n";
@@ -56,10 +56,13 @@ foreach $Lfile (@ARGV){ ## unsel files
 		$r = 1 / ($L-1); ## $r between neighboring loci
 		$s = $th * $r; ## theta = s/r, thus s = theta * r
 		foreach $j (0..9){ ## reps
-			sleep 2;	
-			$pm->start and next;
-			$out = "o_d110_L$L"."_theta$th"."_rep$j";
-			system "~/bin/dfuse_src/dfuse -d demefile_110 -s $Lfile -o $out -g 2000 -c $s -G 500 -m 0.1\n";
+                        sleep 2;        
+                        $pm->start and next;
+                        $out = "o_m2_d110_L$L"."_theta$th"."_rep$j";
+                        system "~/bin/dfuse_src/dfuse -d demefile_110 -s $Lfile -o $out -g 2000 -c $s -G 500 -m 0.2\n";
+                        $out = "o_d110_L$L"."_theta$th"."_rep$j";
+                        system "~/bin/dfuse_src/dfuse -d demefile_110 -s $Lfile -o $out -g 2000 -c $s -G 500 -m 0.1\n";
+
 
 			$pm->finish;
 		}
@@ -68,10 +71,16 @@ foreach $Lfile (@ARGV){ ## unsel files
 
 $pm->wait_all_children;
 ```
-After starting this, I decided to run a second set with m = 0.2 (that might seem high, but this is between neighboring demes and there are many demes spanning the whole space so the flux of genes across the whole system shouldn't be too crazy). I am not so much interested in different migration rates per se as this should just change the scale of everything, but I want to verify that that is true for geographic clines and verify that there really isn't much of an effect in terms of variance in clines for genomic clines.
+After starting this, I decided to run a second set with m = 0.2 (incorporated in code above; that might seem high, but this is between neighboring demes and there are many demes spanning the whole space so the flux of genes across the whole system shouldn't be too crazy). I am not so much interested in different migration rates per se as this should just change the scale of everything, but I want to verify that that is true for geographic clines and verify that there really isn't much of an effect in terms of variance in clines for genomic clines.
 
 # Simulation results: cline in hybrid indexes
 
 As a first summary of the simulation results, I plotted geographic clines in the mean hybrid index for each site ([SummarizeHi.R](SummarizeHi.R)). The results are shown here, [clinesHi.pdf](https://github.com/zgompert/ClineCoupling/files/9984685/clinesHi.pdf). Each panel is a deparate set of simulation conditions; the title gives the number of demes (110) and $\theta$ (migration 0.1 or, with m2 = 0.2). Each line is a replicate (not differnt loci) and black versus gray denote 2000 versus 1500 generations. Key take homes are that 2000 generations appears to be sufficient to reach equilibirum (not notably different from 1500), and thus will work for downstream analyses, and that the overall shape of the hybrid index cline is consistent across replicates and looks to be closely tied to $\theta$.
+
+# Geographic clines for simulations
+
+The simulations have a strong geographic axis and a common scale (at least one for each migration rate) and thus first quantifying variation in geographic clines makes great sense here. That is what we did. One issue is the different mathematical forms expected for single locus (sigmoidal) vs multilocus (stepped) clines. Fortunately, in both cases the center part of the cline should reflect the total selection on the locus and should have the same form. Specifically, we can estimate the maximum gradient of the cline by tranforming $p$ (allele frequency) to a logit scale at which point the relationship between location and $\mathrm{logit}(p)$ should be approximately linear (e.g., [Kruuk 1999](https://academic.oup.com/genetics/article/153/4/1959/6035068),  [Barton 1989](https://www.nature.com/articles/341497a0)). Kruuk recommends estimating the gradient between populations with $p \approx 0.12$ and $p \approx 0.88$ (-2 and 2 on the logit scale). I did something a bit different with the same aim. Specifically, in some cases the transition occurs between a single pair of populations or even between a pair of populations, which renders this sometimes infeasible. Instead, I find the point where $p$ for each locus is closest to 0.5. The, I take that popualtion and five on either side as the set to estimate the maximum gradient. Thus, I always have 11 data points to fit the linear regression. This means sometimes I might include populations outside of the linear component (where the gradient is maxium) but this seems like a reasonable overall tradeoff in terms of automating the analysis of 1140 data sets.
+
+The main R script for running these analyses is. This uses the hierarchical Bayesian model defined in XX, which we fit with Hamiltonian Monte Carlo using `rstan` (version XX). This was done with `R` version 4.1.3. 
 
 
