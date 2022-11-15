@@ -86,3 +86,5 @@ The main R script for running these analyses is [fitGeoClines.R](fitGeoClines.R)
 As expected, the mean and variance in cline widths and gradients are generally explained by coupling (NEED TO ADD RESULTS AND PLOTS).
 
 # Genomic clines for simulations
+
+I am using the logit-logistric function for genomic clines following [Fitzpatrick 2013](https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.609) (but modeling ancestry unlike the original). This avoids having to splice functions in `rstan`. The version for the simulations assumes hybrid index and parental allele frequencies are known. I have versions with and without sum-to-zero constraints on the cline parameters. I am trying without first. The model has two cline parameter $u$ and $v$ and takes the form $\Phi = \frac{h^v}{h^v + (1-h)^v + e^u}$, where $\Phi$ is the ancestry probability, and $h$ is hybrid index (indexed by individual). $v$ measures the slope (gradient) relative to genome-wide average (1 denotes same as genome-wide avaerage) and $u$ is related to the center (both are indexed by locus). 
