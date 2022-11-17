@@ -103,10 +103,44 @@ for(i in 1:length(ff)){
 }
 
 ## correlations look good as expected, think this is happy
-## not two scales (w vs mu sig) give similar (highly correlated) results
-## for mean and CV, but not for SD, look at code to verify why
-
+## the two scales (w vs mu sig) give similar (highly correlated) results
+## for mean and CV, but not for SD
 ## from some simple simulations, flipping things really does affect the SD
+
+## cline width
+o<-lm(conds[,2] ~ wbar[,1]*wsd[,1])
+summary(o)
+#                     Estimate Std. Error t value Pr(>|t|)    
+#(Intercept)         1.530e+00  1.850e-02   82.70   <2e-16 ***
+#wbar[, 1]          -8.131e-02  3.603e-03  -22.57   <2e-16 ***
+#wsd[, 1]           -8.805e-03  7.771e-04  -11.33   <2e-16 ***
+#wbar[, 1]:wsd[, 1]  5.077e-04  2.447e-05   20.75   <2e-16 ***
+#Residual standard error: 0.2923 on 1136 degrees of freedom
+#Multiple R-squared:  0.7417,	Adjusted R-squared:  0.741 
+#F-statistic:  1087 on 3 and 1136 DF,  p-value: < 2.2e-16
+
+## hierarchical scale
+o<-lm(conds[,2] ~ mu[,1]*sig[,1])
+summary(o)
+#                 Estimate Std. Error t value Pr(>|t|)
+#(Intercept)      -0.25073    0.03861  -6.494 1.25e-10 ***
+#mu[, 1]          -1.18403    0.02833 -41.796  < 2e-16 ***
+#sig[, 1]          0.73726    0.14487   5.089 4.20e-07 ***
+#mu[, 1]:sig[, 1]  1.03372    0.12295   8.408  < 2e-16 ***
+#Residual standard error: 0.221 on 1136 degrees of freedom
+#Multiple R-squared:  0.8523,	Adjusted R-squared:  0.8519
+#F-statistic:  2185 on 3 and 1136 DF,  p-value: < 2.2e-16
+
+cv<-sig[,1]/mu[,1]
+o<-lm(conds[,2] ~ cv)
+summary(o)
+#            Estimate Std. Error t value Pr(>|t|)    
+#(Intercept)  1.42934    0.01438   99.38   <2e-16 ***
+#cv           1.33724    0.02351   56.87   <2e-16 ***
+#Residual standard error: 0.2931 on 1138 degrees of freedom
+#Multiple R-squared:  0.7397,	Adjusted R-squared:  0.7395 
+#F-statistic:  3235 on 1 and 1138 DF,  p-value: < 2.2e-16
+
 
 save(list=ls(),file="geoCl.rdat")
 
