@@ -117,3 +117,13 @@ Next steps: I am mostly happy with this but could imagine a finer grid of coupli
 # Example genomic clines analysis
 
 I ran an initial analysis with the genomic cline model for *Lycaeides* (Dubois hybrid zone, see [Chaturvedie 2020](https://www.nature.com/articles/s41467-020-15641-x)). For this initial analysis I am now worrying about treating the sex (Z) chromosome separately or differently (this is just an example). I am working from genotype estiamtes (from `entropy`) for the analysis, and am focusing on ancestry informative SNPs (allele frequency difference $>$ 0.3 between parents). My analysis is in [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R). Much of the code involves formatting the data, identifying the ancestry informative SNPs, and subsetting these. After that, I estimate hybrid indexes and fit the clines. The cline width and center SD are 0.36 and 0.95, consisent with very little coupling (a low coupling coefficient, compare to [CouplingVsClineSD.pdf](https://github.com/zgompert/ClineCoupling/files/10027328/CouplingVsClineSD.pdf).
+
+## Summary of results
+
+The data sets we are working with are summarized [here](https://docs.google.com/document/d/13ojSDHTLW1YxPb16ddE27iLHJs0N7P_foxr9rGC1Vnk/edit) and are on [dropbox](https://www.dropbox.com/scl/fo/axlbcw8yhpnhy8oktpgb3/h?dl=0&rlkey=eqgxopr3ynx6ylm5vv67wr7pv). Below I am keeping track of the SD parameter estimates for the data sets that we have finished analyzing.
+
+| Organism | Subset of loci | $\sigma_c$ | $\sigma_v$ |
+|----------|----------------|------------|------------|
+| *Lycaeides* | All anc. informative | 0.95 | 0.36 |
+| *Lycaeides* | Autosomal only |  |  |
+| *Lycaeides* | Z only |  |  |
