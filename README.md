@@ -124,8 +124,8 @@ I need to add details, but I ran the autosome and Z chromosome analyses. As part
 
 The data sets we are working with are summarized [here](https://docs.google.com/document/d/13ojSDHTLW1YxPb16ddE27iLHJs0N7P_foxr9rGC1Vnk/edit) and are on [dropbox](https://www.dropbox.com/scl/fo/axlbcw8yhpnhy8oktpgb3/h?dl=0&rlkey=eqgxopr3ynx6ylm5vv67wr7pv). Below I am keeping track of the SD parameter estimates for the data sets that we have finished analyzing. Quick note, keep an eye on how well the soft centering is going and whether it might be necessary to account for how well it is working in the SDs.
 
-| Organism | Subset of loci | $\sigma_c$ | $\sigma_v$ |
-|----------|----------------|------------|------------|
-| *Lycaeides* | All anc. informative | 0.95 | 0.36 |
-| *Lycaeides* | Autosomal only | 0.72 | 0.32 |
-| *Lycaeides* | Z only | 1.50 | 0.36 |
+| Organism | Subset of loci | $\sigma_c$ | $\sigma_v$ | SD $c$ | SD $v$ | Script |
+|----------|----------------|------------|------------|--------|--------|--------|
+| *Lycaeides* | All anc. informative | 0.94 | 0.35 | 0.93 | 0.32 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
+| *Lycaeides* | Autosomal only | 0.71 | 0.32 | 0.71 | 0.29 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
+| *Lycaeides* | Z only | 1.50 | 0.36 | 1.46 | 0.32 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
