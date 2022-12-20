@@ -114,15 +114,9 @@ Coupling explains a notable proportion of the variation in the SD for cline cent
 
 Next steps: I am mostly happy with this but could imagine a finer grid of coupling coefficients but stopping at 1.1 or so. Also, I want to summarize the prevalence of hybrids (distribution of hybrid index or something like that) as another metric for getting at coupling (i.e., when $\Theta$ is high, it is the absence of hybrids rather than clines per se that is most striking). 
 
-# Example genomic clines analysis
+# Summary of results
 
-I ran an initial analysis with the genomic cline model for *Lycaeides* (Dubois hybrid zone, see [Chaturvedie 2020](https://www.nature.com/articles/s41467-020-15641-x)). For this initial analysis I am now worrying about treating the sex (Z) chromosome separately or differently (this is just an example). I am working from genotype estiamtes (from `entropy`) for the analysis, and am focusing on ancestry informative SNPs (allele frequency difference $>$ 0.3 between parents). My analysis is in [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R). Much of the code involves formatting the data, identifying the ancestry informative SNPs, and subsetting these. After that, I estimate hybrid indexes (model = [simple_hindex.stan](simple_hindex.stan))  and fit the clines (model = [simple_clinemod_nosz.stan](simple_clinemod_nosz.stan). The cline width and center SD are 0.36 and 0.95, consisent with very little coupling (a low coupling coefficient, compare to [CouplingVsClineSD.pdf](https://github.com/zgompert/ClineCoupling/files/10027328/CouplingVsClineSD.pdf). 
-
-I need to add details, but I ran the autosome and Z chromosome analyses. As part of this, I know have the models for sex chromosomes, [sexchrom_hindex.stan](sexchrom_hindex.stan) and [sexchrom_clinemod_nosz.stan](sexchrom_clinemod_nosz.stan).
-
-## Summary of results
-
-The data sets we are working with are summarized [here](https://docs.google.com/document/d/13ojSDHTLW1YxPb16ddE27iLHJs0N7P_foxr9rGC1Vnk/edit) and are on [dropbox](https://www.dropbox.com/scl/fo/axlbcw8yhpnhy8oktpgb3/h?dl=0&rlkey=eqgxopr3ynx6ylm5vv67wr7pv). Below I am keeping track of the SD parameter estimates for the data sets that we have finished analyzing. Quick note, keep an eye on how well the soft centering is going and whether it might be necessary to account for how well it is working in the SDs.
+The data sets we are working with are summarized [here](https://docs.google.com/document/d/13ojSDHTLW1YxPb16ddE27iLHJs0N7P_foxr9rGC1Vnk/edit) and are on [dropbox](https://www.dropbox.com/scl/fo/axlbcw8yhpnhy8oktpgb3/h?dl=0&rlkey=eqgxopr3ynx6ylm5vv67wr7pv). Below I am keeping track of the SD parameter estimates for the data sets that we have finished analyzing. Quick note, keep an eye on how well the soft centering is going and whether it might be necessary to account for how well it is working in the SDs (looking pretty damn good so far).
 
 | Organism | Subset of loci | $\sigma_c$ | $\sigma_v$ | SD $c$ | SD $v$ | Script |
 |----------|----------------|------------|------------|--------|--------|--------|
@@ -130,6 +124,17 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Aloutatta* | 1000 anc. informative | 1.02 | 0.23 | 1.01 | 0.20 | [FitClineModel_Alouatta.R](FitClineModel_Alouatta.R) |
 | *Ceononympha* |  All anc. informative | 1.11 | 0.31 | 1.11 | 0.29 | [FitClineModel_Ceononympha.R](FitClineModel_Ceononympha.R) |
 | *Corvus* | Anc. info. and missing | 0.86 | 0.40 | 0.86 | 0.34 | [FitClineModel_Corvus.R](FitClineModel_Corvus.R) |
+| *Croatalus* | 1000 anc. and missing | 0.91 | 0.33 | 0.90 | 0.29 | [FitClineModel_Croatalus.R](FitClineModel_Croatalus.R) |
+| *Fundulus* | 1000 anc. and missing | 0.45 | 0.12 | 0.45 | 0.11 | [FitClineModel_Fundulus.R](FitClineModel_Fundulus.R) | 
+| *Gryllus* CT | All anc. informative | 0.81 | 0.24 | 0.81 | 0.22 | [FitClineModel_Gryllus_CT.R](FitClineModel_Gryllus_CT.R) |
+| *Gryllus* PA | All anc. informative | 0.48 | 0.15 | 0.48 | 0.14 | [FitClineModel_Gryllus_PA.R](FitClineModel_Gryllus_PA.R) |
 | *Lycaeides* | All anc. informative | 0.94 | 0.35 | 0.93 | 0.32 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
 | *Lycaeides* | Autosomal only | 0.71 | 0.32 | 0.71 | 0.29 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
 | *Lycaeides* | Z only | 1.50 | 0.36 | 1.46 | 0.32 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
+| *Mytilus* | Anc. info. and missing | 0.29 | 0.27 | 0.29 | 0.22 | [FitClineModel_Mytilus.R](FitClineModel_Mytilus.R) |
+| *Papilio* | All anc. informative | 0.29 | 0.21 | 0.29 | 0.18 | [FitClineModel_Papilio.R](FitClineModel_Papilio.R) | 
+| *Picea* | All anc. informative | 0.67 | 0.22 | 0.67 | 0.21 | [FitClineModel_Picea_glauXstich.R](FitClineModel_Picea_glauXstich.R) |
+| *Sceloporus* | Anc. info. and missing | 1.09 | 0.21 | 1.09 | 0.21 | [FitClineModel_Sceloporus.R](FitClineModel_Sceloporus.R) |
+| *Sternotherus* | Anc. info. and missing | 0.57 | 0.28 | 0.56 | 0.27 | [FitClineModel_Sternotherus.R](FitClineModel_Sternotherus.R) |
+
+
