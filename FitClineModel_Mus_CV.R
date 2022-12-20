@@ -1,4 +1,4 @@
-## script to format the Lycaeides data and fite the cline model
+## script to format the Mus CZ data and fite the cline model
 ## load libraries
 library(data.table)
 library(rstan)
@@ -6,83 +6,63 @@ rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 library(scales) ## for plotting
 
-
-## first read in the genotype matrix, these are posteior point estimates, between 0 and 2, but not 
-## constrained to integer values... I have estimates from four admixture models that I am combining here
-
-gf<-list.files(pattern="geno_")
-#[1] "geno_K2.txt" "geno_K3.txt" "geno_K4.txt" "geno_K5.txt"
-
-gg<-vector("list",length(gf))
-for(k in 1:4){
-	gg[[k]]<-as.matrix(fread(gf[k],header=FALSE,sep=","))
-}
-
-## average
-G<-(gg[[1]] + gg[[2]] + gg[[3]] + gg[[4]])/4
+## read genotype data, note diagnostics markers
+gdat<-read.table("Genotype_Data_Matrix.csv",header=TRUE,sep=",")
 
 
-## read ids
-ids<-read.table("Ids.txt",header=FALSE)
+G<-gdat[gdat$Transect=="CZ",-c(1:6)]
+N<-dim(G)[1];L<-dim(G)[2]
+Gint<-matrix(NA,nrow=N,ncol=L)
+Gint[G=="DD"]<-0
+Gint[G=="MM"]<-1
+Gint[G=="DM" | G=="MD"]<-1
+Gint[G=="D"]<-0
+Gint[G=="M"]<-1
 
-## PCA sanity check
-pc<-prcomp(G,center=TRUE,scale=FALSE)
-plot(pc$x[,1],pc$x[,2],type='n',xlab="PC1",ylab="PC2")
-text(pc$x[,1],pc$x[,2],ids[,1])
-
-## P1 = idas/JH, p2 = melissa, hybrids = dubois/DBS
-## use BTB and BCR and BLD for P1
-## use VIC and SIN for P2
-
-## simple parental allele frequencies from genotypes
-p1x<-which(ids[,1] %in% c("BTB","BCR","BLD"))
-length(p1x) ## 166
-P1<-apply(G[p1x,],2,mean)/2
-
-p2x<-which(ids[,1] %in% c("VIC","SIN"))
-length(p2x) ## 166
-P2<-apply(G[p2x,],2,mean)/2
-
+P1<-rep(0,L)
+P2<-rep(1,L)
 ## ancestry informative
 dp<-abs(P1-P2)
-sum(dp > .3) ## 500 ancestry informative based on this definition, dif > .3 for these pops
+Miss<-apply(is.na(Gint)==TRUE,2,mean)
+sum(dp > .3 & Miss < 0.2) ## all 1399 out of 1401, all were dp > .3
 
-anc<-which(dp > .3)
+## sample 1000
+anc<-sort(sample(which(dp > .3 & Miss < 0.2),1000,replace=FALSE))
 plot(P1[anc],P2[anc])
 
-dbs<-which(ids[,1]=="DBS")
-length(dbs)## 115 hybrids
 
 ## genotype matrix for ancestry informative SNPs for hybrids
-Ghyb<-G[dbs,anc]
-GhybI<-round(Ghyb,0) ## using integer estimates, keeping it simple
+GhybI<-Gint[,anc]
 
 ## SNP/sex specific ploidy
-ids<-read.table("Ids.txt",header=FALSE)
-snps<-read.table("snps.txt",header=FALSE)
-ZAnc<-which(snps[anc,1] == 1631)
-Ploidy<-matrix(2,nrow=length(dbs),ncol=length(anc))
-sex<-ids[dbs,2]
-Ploidy[sex=="F",ZAnc]<-1
-GhybI[Ploidy==1]<-round(GhybI[Ploidy==1]/2,0) 
+XAnc<-which(anc >=1317)
+Ploidy<-matrix(2,nrow=N,ncol=1000)
+Ploidy[which(gdat$Sex[gdat$Transect=="BV"]=="M"),XAnc]<-1
+
+## deal with missing
+Miss<-is.na(GhybI)+0
+GhybIM<-GhybI
+GhybIM[Miss==1]<-1
 
 
 ############# estiamte hybrid indexes##############
 ## number of loci and individuals, rows=ids
 L<-dim(GhybI)[2];N<-dim(GhybI)[1]
 ## make data list with number of loci, number of inds, genotype matrix and parental allele freqs.
-## could use subset for hybrid index, but 500 won't take too long, so it is okay
-dat<-list(L=L,N=N,G=GhybI,P0=P1[anc],P1=P2[anc],ploidy=Ploidy)
-fit_hi<-stan("../mixed_hindex.stan",data=dat)
+dat<-list(L=L,N=N,G=GhybIM,P0=P1[anc],P1=P2[anc],ploidy=Ploidy,miss=Miss)
+fit_hi<-stan("../mixedmiss_hindex.stan",data=dat)
 
 ## extract posteriors for hybrid index
 hi<-extract(fit_hi,"H")
 ## point esimte
 hi_est<-apply(hi[[1]],2,median)
 
+save(list=ls(),file="clines_Mus_CZ_mixed.rdat")
+
+
 ############ fit clines #####################
 ## make data list
-dat<-list(L=L,N=N,G=GhybI,H=hi_est,P0=P1[anc],P1=P2[anc],ploidy=Ploidy)
+dat<-list(L=L,N=N,G=GhybI,H=hi_est,P0=P1[anc],P1=P2[anc],ploidy=Ploidy,Miss=miss)
 ## use 8 shorter chains to speed up the anlaysis
 n_chains<-8
 ## helps to initialize cline parameters to reasonable values
@@ -92,11 +72,12 @@ initf<-function(L=length(anc),chain_id=1){
 init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
 
 ## fit model
-fit<-stan("../mixed_clinemod_nosz.stan",data=dat,chains=n_chains,iter=1500,warmup=1000,init=init_ll)
+fit<-stan("../mixedmiss_clinemod_nosz.stan",data=dat,chains=n_chains,iter=1500,warmup=1000,init=init_ll)
 
 
 ## extract MCMC output
 oo<-extract(fit)
+save(list=ls(),file="clines_Mus_CZ_mixed.rdat")
 
 ## focus on key SD parameters, variability in cline center and width
 
