@@ -118,7 +118,7 @@ Next steps: I am mostly happy with this but could imagine a finer grid of coupli
 
 The data sets we are working with are summarized [here](https://docs.google.com/document/d/13ojSDHTLW1YxPb16ddE27iLHJs0N7P_foxr9rGC1Vnk/edit) and are on [dropbox](https://www.dropbox.com/scl/fo/axlbcw8yhpnhy8oktpgb3/h?dl=0&rlkey=eqgxopr3ynx6ylm5vv67wr7pv). Below I am keeping track of the SD parameter estimates for the data sets that we have finished analyzing. Quick note, keep an eye on how well the soft centering is going and whether it might be necessary to account for how well it is working in the SDs (looking pretty damn good so far).
 
-| Organism | Subset of loci | $\sigma_c$ | $\sigma_v$ | SD $c$ | SD $v$ | $\theta | Script |
+| Organism | Subset of loci | $\sigma_c$ | $\sigma_v$ | SD $c$ | SD $v$ | $\theta$ | Script |
 |----------|----------------|------------|------------|--------|--------|---------|--------|
 | *Agalychnis* | Anc. info. and missing | 1.42 | 0.56 | 1.42 | 0.39 | 0.12 | [FitClineModel_Agalychnis.R](FitClineModel_Agalychnis.R) |
 | *Aloutatta* | 1000 anc. informative | 1.02 | 0.23 | 1.01 | 0.20 | 0.65 | [FitClineModel_Alouatta.R](FitClineModel_Alouatta.R) |
