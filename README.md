@@ -118,23 +118,23 @@ Next steps: I am mostly happy with this but could imagine a finer grid of coupli
 
 The data sets we are working with are summarized [here](https://docs.google.com/document/d/13ojSDHTLW1YxPb16ddE27iLHJs0N7P_foxr9rGC1Vnk/edit) and are on [dropbox](https://www.dropbox.com/scl/fo/axlbcw8yhpnhy8oktpgb3/h?dl=0&rlkey=eqgxopr3ynx6ylm5vv67wr7pv). Below I am keeping track of the SD parameter estimates for the data sets that we have finished analyzing. Quick note, keep an eye on how well the soft centering is going and whether it might be necessary to account for how well it is working in the SDs (looking pretty damn good so far).
 
-| Organism | Subset of loci | $\sigma_c$ | $\sigma_v$ | SD $c$ | SD $v$ | Script |
-|----------|----------------|------------|------------|--------|--------|--------|
-| *Agalychnis* | Anc. info. and missing | 1.42 | 0.56 | 1.42 | 0.39 | [FitClineModel_Agalychnis.R](FitClineModel_Agalychnis.R) |
-| *Aloutatta* | 1000 anc. informative | 1.02 | 0.23 | 1.01 | 0.20 | [FitClineModel_Alouatta.R](FitClineModel_Alouatta.R) |
-| *Ceononympha* |  All anc. informative | 1.11 | 0.31 | 1.11 | 0.29 | [FitClineModel_Ceononympha.R](FitClineModel_Ceononympha.R) |
-| *Corvus* | Anc. info. and missing | 0.86 | 0.40 | 0.86 | 0.34 | [FitClineModel_Corvus.R](FitClineModel_Corvus.R) |
-| *Croatalus* | 1000 anc. and missing | 0.91 | 0.33 | 0.90 | 0.29 | [FitClineModel_Croatalus.R](FitClineModel_Croatalus.R) |
-| *Fundulus* | 1000 anc. and missing | 0.45 | 0.12 | 0.45 | 0.11 | [FitClineModel_Fundulus.R](FitClineModel_Fundulus.R) | 
-| *Gryllus* CT | All anc. informative | 0.81 | 0.24 | 0.81 | 0.22 | [FitClineModel_Gryllus_CT.R](FitClineModel_Gryllus_CT.R) |
-| *Gryllus* PA | All anc. informative | 0.48 | 0.15 | 0.48 | 0.14 | [FitClineModel_Gryllus_PA.R](FitClineModel_Gryllus_PA.R) |
-| *Lycaeides* | All anc. informative | 0.94 | 0.35 | 0.93 | 0.32 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
-| *Lycaeides* | Autosomal only | 0.71 | 0.32 | 0.71 | 0.29 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
-| *Lycaeides* | Z only | 1.50 | 0.36 | 1.46 | 0.32 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
-| *Mytilus* | Anc. info. and missing | 0.29 | 0.27 | 0.29 | 0.22 | [FitClineModel_Mytilus.R](FitClineModel_Mytilus.R) |
-| *Papilio* | All anc. informative | 0.29 | 0.21 | 0.29 | 0.18 | [FitClineModel_Papilio.R](FitClineModel_Papilio.R) | 
-| *Picea* | All anc. informative | 0.67 | 0.22 | 0.67 | 0.21 | [FitClineModel_Picea_glauXstich.R](FitClineModel_Picea_glauXstich.R) |
-| *Sceloporus* | Anc. info. and missing | 1.09 | 0.21 | 1.09 | 0.21 | [FitClineModel_Sceloporus.R](FitClineModel_Sceloporus.R) |
-| *Sternotherus* | Anc. info. and missing | 0.57 | 0.28 | 0.56 | 0.27 | [FitClineModel_Sternotherus.R](FitClineModel_Sternotherus.R) |
+| Organism | Subset of loci | $\sigma_c$ | $\sigma_v$ | SD $c$ | SD $v$ | $\theta | Script |
+|----------|----------------|------------|------------|--------|--------|---------|--------|
+| *Agalychnis* | Anc. info. and missing | 1.42 | 0.56 | 1.42 | 0.39 | 0.12 | [FitClineModel_Agalychnis.R](FitClineModel_Agalychnis.R) |
+| *Aloutatta* | 1000 anc. informative | 1.02 | 0.23 | 1.01 | 0.20 | 0.65 | [FitClineModel_Alouatta.R](FitClineModel_Alouatta.R) |
+| *Ceononympha* |  All anc. informative | 1.11 | 0.31 | 1.11 | 0.29 | 0.44 | [FitClineModel_Ceononympha.R](FitClineModel_Ceononympha.R) |
+| *Corvus* | Anc. info. and missing | 0.86 | 0.40 | 0.86 | 0.34 | 0.14 | [FitClineModel_Corvus.R](FitClineModel_Corvus.R) |
+| *Croatalus* | 1000 anc. and missing | 0.91 | 0.33 | 0.90 | 0.29 | 0.37 | [FitClineModel_Croatalus.R](FitClineModel_Croatalus.R) |
+| *Fundulus* | 1000 anc. and missing | 0.45 | 0.12 | 0.45 | 0.11 | 1.30 | [FitClineModel_Fundulus.R](FitClineModel_Fundulus.R) | 
+| *Gryllus* CT | All anc. informative | 0.81 | 0.24 | 0.81 | 0.22 | 0.67 | [FitClineModel_Gryllus_CT.R](FitClineModel_Gryllus_CT.R) |
+| *Gryllus* PA | All anc. informative | 0.48 | 0.15 | 0.48 | 0.14 | 1.15 | [FitClineModel_Gryllus_PA.R](FitClineModel_Gryllus_PA.R) |
+| *Lycaeides* | All anc. informative | 0.94 | 0.35 | 0.93 | 0.32 | 0.31 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
+| *Lycaeides* | Autosomal only | 0.71 | 0.32 | 0.71 | 0.29 | NA | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
+| *Lycaeides* | Z only | 1.50 | 0.36 | 1.46 | 0.32 | NA | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
+| *Mytilus* | Anc. info. and missing | 0.29 | 0.27 | 0.29 | 0.22 | 0.62 | [FitClineModel_Mytilus.R](FitClineModel_Mytilus.R) |
+| *Papilio* | All anc. informative | 0.29 | 0.21 | 0.29 | 0.18 | 0.93 | [FitClineModel_Papilio.R](FitClineModel_Papilio.R) | 
+| *Picea* | All anc. informative | 0.67 | 0.22 | 0.67 | 0.21 | 0.77 | [FitClineModel_Picea_glauXstich.R](FitClineModel_Picea_glauXstich.R) |
+| *Sceloporus* | Anc. info. and missing | 1.09 | 0.21 | 1.09 | 0.21 | 0.69 | [FitClineModel_Sceloporus.R](FitClineModel_Sceloporus.R) |
+| *Sternotherus* | Anc. info. and missing | 0.57 | 0.28 | 0.56 | 0.27 | 0.55 | [FitClineModel_Sternotherus.R](FitClineModel_Sternotherus.R) |
 
 
