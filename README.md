@@ -127,7 +127,9 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | Organism | Subset of loci | $\sigma_c$ | $\sigma_v$ | SD $c$ | SD $v$ | Script |
 |----------|----------------|------------|------------|--------|--------|--------|
 | *Agalychnis* | Anc. info. and missing | 1.42 | 0.56 | 1.42 | 0.39 | [FitClineModel_Agalychnis.R](FitClineModel_Agalychnis.R) |
+| *Aloutatta* | 1000 anc. informative | 1.02 | 0.23 | 1.01 | 0.20 | [FitClineModel_Alouatta.R](FitClineModel_Alouatta.R) |
+| *Ceononympha* |  All anc. informative | 1.11 | 0.31 | 1.11 | 0.29 | [FitClineModel_Ceononympha.R](FitClineModel_Ceononympha.R) |
+| *Corvus* | Anc. info. and missing | 0.86 | 0.40 | 0.86 | 0.34 | [FitClineModel_Corvus.R](FitClineModel_Corvus.R) |
 | *Lycaeides* | All anc. informative | 0.94 | 0.35 | 0.93 | 0.32 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
-| * Aloutatta* | 1000 anc. informative | 1.02 | 0.23 | 1.01 | 0.20 | [FitClineModel_Alouatta.R](FitClineModel_Alouatta.R) |
 | *Lycaeides* | Autosomal only | 0.71 | 0.32 | 0.71 | 0.29 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
 | *Lycaeides* | Z only | 1.50 | 0.36 | 1.46 | 0.32 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
