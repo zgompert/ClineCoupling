@@ -131,6 +131,9 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Lycaeides* | All anc. informative | 0.94 | 0.35 | 0.93 | 0.32 | 0.31 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
 | *Lycaeides* | Autosomal only | 0.71 | 0.32 | 0.71 | 0.29 | NA | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
 | *Lycaeides* | Z only | 1.50 | 0.36 | 1.46 | 0.32 | NA | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
+| *Mus* BV | 1000 anc. and missing | 0.69 | 0.16 | 0.69 | 0.15 | NA | [FitClineModel_Mus_BV.R](FitClineModel_Mus_BV.R) |
+| *Mus* CZ | 1000 anc. and missing | 0.94 | 0.35 | 0.93 | 0.32 | NA | [FitClineModel_Mus_CZ.R](FitClineModel_Mus_CZ.R) |
+| *Mus* SX | 1000 anc. and missing | 1.01 | 0.23 | 1.01 | 0.19 | NA | [FitClineModel_Mus_SX.R](FitClineModel_Mus_SX.R) |
 | *Mytilus* | Anc. info. and missing | 0.29 | 0.27 | 0.29 | 0.22 | 0.62 | [FitClineModel_Mytilus.R](FitClineModel_Mytilus.R) |
 | *Papilio* | All anc. informative | 0.29 | 0.21 | 0.29 | 0.18 | 0.93 | [FitClineModel_Papilio.R](FitClineModel_Papilio.R) | 
 | *Picea* | All anc. informative | 0.67 | 0.22 | 0.67 | 0.21 | 0.77 | [FitClineModel_Picea_glauXstich.R](FitClineModel_Picea_glauXstich.R) |
