@@ -138,7 +138,7 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Mytilus* | Anc. info. and missing | 0.29 | 0.27 | 0.29 | 0.22 | 0.62 | [FitClineModel_Mytilus.R](FitClineModel_Mytilus.R) |
 | *Papilio* | All anc. informative | 0.29 | 0.21 | 0.29 | 0.18 | 0.93 | [FitClineModel_Papilio.R](FitClineModel_Papilio.R) | 
 | *Picea* | All anc. informative | 0.67 | 0.22 | 0.67 | 0.21 | 0.77 | [FitClineModel_Picea_glauXstich.R](FitClineModel_Picea_glauXstich.R) |
-| *Poecile* | All anc. informative | 0.94 | 0.40 | 0.94 | 0.37 | 0.17 | [FitClineModel_Poecile.R](FitClineModel_Poecile.R) |
+| *Poecile* | 1000 anc. and missing | 0.94 | 0.40 | 0.94 | 0.37 | 0.17 | [FitClineModel_Poecile.R](FitClineModel_Poecile.R) |
 | *Sceloporus* | Anc. info. and missing | 1.09 | 0.21 | 1.09 | 0.21 | 0.69 | [FitClineModel_Sceloporus.R](FitClineModel_Sceloporus.R) |
 | *Sternotherus* | Anc. info. and missing | 0.57 | 0.28 | 0.56 | 0.27 | 0.55 | [FitClineModel_Sternotherus.R](FitClineModel_Sternotherus.R) |
 
