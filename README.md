@@ -128,6 +128,8 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Fundulus* | 1000 anc. and missing | 0.45 | 0.12 | 0.45 | 0.11 | 1.30 | [FitClineModel_Fundulus.R](FitClineModel_Fundulus.R) | 
 | *Gryllus* CT | All anc. informative | 0.81 | 0.24 | 0.81 | 0.22 | 0.67 | [FitClineModel_Gryllus_CT.R](FitClineModel_Gryllus_CT.R) |
 | *Gryllus* PA | All anc. informative | 0.48 | 0.15 | 0.48 | 0.14 | 1.15 | [FitClineModel_Gryllus_PA.R](FitClineModel_Gryllus_PA.R) |
+| *Lissotriton* L | Anc. info. and missing | 0.35 | 0.14 | 0.35 | 0.14 | NA | [FitClineModel_lissotriton_L.R](FitClineModel_lissotriton_L.R) |
+| *Lissotriton* R | Anc. info. and missing | 0.97 | 0.14 | 0.97 | 0.14 | NA | [FitClineModel_lissotriton_R.R](FitClineModel_lissotriton_R.R) |
 | *Lycaeides* | All anc. informative | 0.94 | 0.35 | 0.93 | 0.32 | 0.31 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
 | *Lycaeides* | Autosomal only | 0.71 | 0.32 | 0.71 | 0.29 | NA | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
 | *Lycaeides* | Z only | 1.50 | 0.36 | 1.46 | 0.32 | NA | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
