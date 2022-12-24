@@ -142,6 +142,7 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Papilio* | All anc. informative | 0.29 | 0.21 | 0.29 | 0.18 | 0.93 | [FitClineModel_Papilio.R](FitClineModel_Papilio.R) | 
 | *Papio* | Anc. info., miss. and het. | 0.84 | 0.41 | 0.84 | 0.36 | 0.10 | [FitClineModel_Papio.R](FitClineModel_Papio.R) | 
 | *Picea* | All anc. informative | 0.67 | 0.22 | 0.67 | 0.21 | 0.77 | [FitClineModel_Picea_glauXstich.R](FitClineModel_Picea_glauXstich.R) |
+| *Pinus* | Anc. info. and missing | 1.10 | 0.37 | 1.10 | 0.32 | NA | [FitClineModel_Pinus.R](FitClineModel_Pinus.R) |
 | *Poecile* | 1000 anc. and missing | 0.94 | 0.40 | 0.94 | 0.37 | 0.17 | [FitClineModel_Poecile.R](FitClineModel_Poecile.R) |
 | *Poecile* MO | 1000 anc. and missing | 0.82 | 0.38 | 0.81 | 0.35 | 0.19 | [FitClineModel_Poecile_MO.R](FitClineModel_Poecile_MO.R) |
 | *Sceloporus* | Anc. info. and missing | 1.09 | 0.21 | 1.09 | 0.21 | 0.69 | [FitClineModel_Sceloporus.R](FitClineModel_Sceloporus.R) |
