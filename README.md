@@ -126,6 +126,7 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Corvus* | Anc. info. and missing | 0.86 | 0.40 | 0.86 | 0.34 | 0.14 | [FitClineModel_Corvus.R](FitClineModel_Corvus.R) |
 | *Croatalus* | 1000 anc. and missing | 0.91 | 0.33 | 0.90 | 0.29 | 0.37 | [FitClineModel_Croatalus.R](FitClineModel_Croatalus.R) |
 | *Fundulus* | 1000 anc. and missing | 0.45 | 0.12 | 0.45 | 0.11 | 1.30 | [FitClineModel_Fundulus.R](FitClineModel_Fundulus.R) | 
+| *Fundulus* Coss| 1000 anc. and missing | 0.33 | 0.08 | 0.34 | 0.08 | 1.58 | [FitClineModel_Fundulus_Cossatot.R](FitClineModel_Fundulus_Cossatot.R) | 
 | *Gryllus* CT | All anc. informative | 0.81 | 0.24 | 0.81 | 0.22 | 0.67 | [FitClineModel_Gryllus_CT.R](FitClineModel_Gryllus_CT.R) |
 | *Gryllus* PA | All anc. informative | 0.48 | 0.15 | 0.48 | 0.14 | 1.15 | [FitClineModel_Gryllus_PA.R](FitClineModel_Gryllus_PA.R) |
 | *Lissotriton* L | Anc. info. and missing | 0.35 | 0.14 | 0.35 | 0.14 | 1.26 | [FitClineModel_lissotriton_L.R](FitClineModel_lissotriton_L.R) |
