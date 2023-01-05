@@ -158,5 +158,5 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Poecile* MO | 1000 anc. and missing | 0.82 | 0.38 | 0.81 | 0.35 | 0.19 | [FitClineModel_Poecile_MO.R](FitClineModel_Poecile_MO.R) |
 | *Sceloporus* | Anc. info. and missing | 1.09 | 0.21 | 1.09 | 0.21 | 0.69 | [FitClineModel_Sceloporus.R](FitClineModel_Sceloporus.R) |
 | *Sternotherus* | Anc. info. and missing | 0.57 | 0.28 | 0.56 | 0.27 | 0.55 | [FitClineModel_Sternotherus.R](FitClineModel_Sternotherus.R) |
-
+| *Zonotrichia* | Anc. info. and missing | 0.63 | 0.57 | 0.63 | 0.42 | NA | [FitClineModel_Zonotrichia.R](FitClineModel_Zonotrichia.R) | 
 
