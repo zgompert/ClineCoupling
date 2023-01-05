@@ -148,6 +148,7 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Mus* CZ | 1000 anc. and missing | 0.70 | 0.14 | 0.70 | 0.13 | 1.07 | [FitClineModel_Mus_CZ.R](FitClineModel_Mus_CZ.R) |
 | *Mus* SX | 1000 anc. and missing | 1.01 | 0.23 | 1.01 | 0.19 | 0.66 | [FitClineModel_Mus_SX.R](FitClineModel_Mus_SX.R) |
 | *Mytilus* | Anc. info. and missing | 0.29 | 0.27 | 0.29 | 0.22 | 0.62 | [FitClineModel_Mytilus.R](FitClineModel_Mytilus.R) |
+| *Nematocharax* | Anc. info. and missing | 0.80 | 0.41 | 0.80 | 0.34 | NA | [FitClineModel_Nematocharax.R](FitClineModel_Nematocharax.R) |
 | *Oleria* | 1000 anc., het. and miss. | 1.73 | 0.50 | 1.72 | 0.41 | 0.42 | [FitClineModel_Oleria.R](FitClineModel_Oleria.R) |
 | *Papilio* | All anc. informative | 0.29 | 0.21 | 0.29 | 0.18 | 0.93 | [FitClineModel_Papilio.R](FitClineModel_Papilio.R) | 
 | *Papio* | Anc. info., miss. and het. | 0.84 | 0.41 | 0.84 | 0.36 | 0.10 | [FitClineModel_Papio.R](FitClineModel_Papio.R) | 
