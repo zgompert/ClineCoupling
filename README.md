@@ -138,8 +138,8 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Fundulus* Coss| 1000 anc. and missing | 0.33 | 0.08 | 0.34 | 0.08 | 1.58 | [FitClineModel_Fundulus_Cossatot.R](FitClineModel_Fundulus_Cossatot.R) | 
 | *Gryllus* CT | All anc. informative | 0.81 | 0.24 | 0.81 | 0.22 | 0.67 | [FitClineModel_Gryllus_CT.R](FitClineModel_Gryllus_CT.R) |
 | *Gryllus* PA | All anc. informative | 0.48 | 0.15 | 0.48 | 0.14 | 1.15 | [FitClineModel_Gryllus_PA.R](FitClineModel_Gryllus_PA.R) |
-| *Hirundo* H1 | All anc. informative | 0.12 | 0.38 | 0.12 | 0.36 | NA | | [FitClineModel_Hirundo_H1.R](FitClineModel_Hirundo_H1.R) |
-| *Hirundo* H2 | All anc. informative | 0.53 | 0.31 | 0.52 | 0.30 | NA | | [FitClineModel_Hirundo_H2.R](FitClineModel_Hirundo_H2.R) |
+| *Hirundo* H1 | All anc. informative | 0.12 | 0.38 | 0.12 | 0.36 | NA | [FitClineModel_Hirundo_H1.R](FitClineModel_Hirundo_H1.R) |
+| *Hirundo* H2 | All anc. informative | 0.53 | 0.31 | 0.52 | 0.30 | NA | [FitClineModel_Hirundo_H2.R](FitClineModel_Hirundo_H2.R) |
 | *Lissotriton* L | Anc. info. and missing | 0.35 | 0.14 | 0.35 | 0.14 | 1.26 | [FitClineModel_lissotriton_L.R](FitClineModel_lissotriton_L.R) |
 | *Lissotriton* R | Anc. info. and missing | 0.97 | 0.14 | 0.97 | 0.14 | 0.92 | [FitClineModel_lissotriton_R.R](FitClineModel_lissotriton_R.R) |
 | *Lycaeides* | All anc. informative | 0.94 | 0.35 | 0.93 | 0.32 | 0.31 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
