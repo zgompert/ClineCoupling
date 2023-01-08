@@ -133,13 +133,13 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Ceononympha* |  All anc. informative | 1.11 | 0.31 | 1.11 | 0.29 | 0.44 | [FitClineModel_Ceononympha.R](FitClineModel_Ceononympha.R) |
 | *Corvus* | Anc. info. and missing | 0.86 | 0.40 | 0.86 | 0.34 | 0.14 | [FitClineModel_Corvus.R](FitClineModel_Corvus.R) |
 | *Croatalus* | 1000 anc. and missing | 0.91 | 0.33 | 0.90 | 0.29 | 0.37 | [FitClineModel_Croatalus.R](FitClineModel_Croatalus.R) |
-| *Encelia* | 1000 anc. and missing | 0.38 | 0.31 | 0.27 | 0.38 | NA | [FitClineModel_Encelia_ASPVEN.R](FitClineModel_Encelia_ASPVEN.R) |
+| *Encelia* | 1000 anc. and missing | 0.38 | 0.31 | 0.27 | 0.38 | 0.41 | [FitClineModel_Encelia_ASPVEN.R](FitClineModel_Encelia_ASPVEN.R) |
 | *Fundulus* | 1000 anc. and missing | 0.45 | 0.12 | 0.45 | 0.11 | 1.30 | [FitClineModel_Fundulus.R](FitClineModel_Fundulus.R) | 
 | *Fundulus* Coss| 1000 anc. and missing | 0.33 | 0.08 | 0.34 | 0.08 | 1.58 | [FitClineModel_Fundulus_Cossatot.R](FitClineModel_Fundulus_Cossatot.R) | 
 | *Gryllus* CT | All anc. informative | 0.81 | 0.24 | 0.81 | 0.22 | 0.67 | [FitClineModel_Gryllus_CT.R](FitClineModel_Gryllus_CT.R) |
 | *Gryllus* PA | All anc. informative | 0.48 | 0.15 | 0.48 | 0.14 | 1.15 | [FitClineModel_Gryllus_PA.R](FitClineModel_Gryllus_PA.R) |
-| *Hirundo* H1 | All anc. informative | 0.12 | 0.39 | 0.12 | 0.36 | NA | [FitClineModel_Hirundo_H1.R](FitClineModel_Hirundo_H1.R) |
-| *Hirundo* H2 | All anc. informative | 0.53 | 0.31 | 0.52 | 0.30 | NA | [FitClineModel_Hirundo_H2.R](FitClineModel_Hirundo_H2.R) |
+| *Hirundo* H1 | All anc. informative | 0.12 | 0.39 | 0.12 | 0.36 | -0.07 | [FitClineModel_Hirundo_H1.R](FitClineModel_Hirundo_H1.R) |
+| *Hirundo* H2 | All anc. informative | 0.53 | 0.31 | 0.52 | 0.30 | 0.42 | [FitClineModel_Hirundo_H2.R](FitClineModel_Hirundo_H2.R) |
 | *Lissotriton* L | Anc. info. and missing | 0.35 | 0.14 | 0.35 | 0.14 | 1.26 | [FitClineModel_lissotriton_L.R](FitClineModel_lissotriton_L.R) |
 | *Lissotriton* R | Anc. info. and missing | 0.97 | 0.14 | 0.97 | 0.14 | 0.92 | [FitClineModel_lissotriton_R.R](FitClineModel_lissotriton_R.R) |
 | *Lycaeides* | All anc. informative | 0.94 | 0.35 | 0.93 | 0.32 | 0.31 | [FitClineModel_Lycaeides.R](FitClineModel_Lycaeides.R) |
@@ -150,7 +150,7 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Mus* CZ | 1000 anc. and missing | 0.70 | 0.14 | 0.70 | 0.13 | 1.07 | [FitClineModel_Mus_CZ.R](FitClineModel_Mus_CZ.R) |
 | *Mus* SX | 1000 anc. and missing | 1.01 | 0.23 | 1.01 | 0.19 | 0.66 | [FitClineModel_Mus_SX.R](FitClineModel_Mus_SX.R) |
 | *Mytilus* | Anc. info. and missing | 0.29 | 0.27 | 0.29 | 0.22 | 0.62 | [FitClineModel_Mytilus.R](FitClineModel_Mytilus.R) |
-| *Nematocharax* | Anc. info. and missing | 0.80 | 0.41 | 0.80 | 0.34 | NA | [FitClineModel_Nematocharax.R](FitClineModel_Nematocharax.R) |
+| *Nematocharax* | Anc. info. and missing | 0.80 | 0.41 | 0.80 | 0.34 | 0.08 | [FitClineModel_Nematocharax.R](FitClineModel_Nematocharax.R) |
 | *Oleria* | 1000 anc., het. and miss. | 1.73 | 0.50 | 1.72 | 0.41 | 0.42 | [FitClineModel_Oleria.R](FitClineModel_Oleria.R) |
 | *Papilio* | All anc. informative | 0.29 | 0.21 | 0.29 | 0.18 | 0.93 | [FitClineModel_Papilio.R](FitClineModel_Papilio.R) | 
 | *Papio* | Anc. info., miss. and het. | 0.84 | 0.41 | 0.84 | 0.36 | 0.10 | [FitClineModel_Papio.R](FitClineModel_Papio.R) | 
@@ -160,5 +160,5 @@ The data sets we are working with are summarized [here](https://docs.google.com/
 | *Poecile* MO | 1000 anc. and missing | 0.82 | 0.38 | 0.81 | 0.35 | 0.19 | [FitClineModel_Poecile_MO.R](FitClineModel_Poecile_MO.R) |
 | *Sceloporus* | Anc. info. and missing | 1.09 | 0.21 | 1.09 | 0.21 | 0.69 | [FitClineModel_Sceloporus.R](FitClineModel_Sceloporus.R) |
 | *Sternotherus* | Anc. info. and missing | 0.57 | 0.28 | 0.56 | 0.27 | 0.55 | [FitClineModel_Sternotherus.R](FitClineModel_Sternotherus.R) |
-| *Zonotrichia* | Anc. info. and missing | 0.63 | 0.57 | 0.63 | 0.42 | NA | [FitClineModel_Zonotrichia.R](FitClineModel_Zonotrichia.R) | 
+| *Zonotrichia* | Anc. info. and missing | 0.63 | 0.57 | 0.63 | 0.42 | -0.63 | [FitClineModel_Zonotrichia.R](FitClineModel_Zonotrichia.R) | 
 
