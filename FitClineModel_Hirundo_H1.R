@@ -60,7 +60,7 @@ initf<-function(L=length(anc),chain_id=1){
 init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
 
 ## fit model
-fit<-stan("../simple_clinemod_nosz.stan",data=dat,chains=n_chains,iter=1500,warmup=1000,init=init_ll)
+fit<-stan("../simple_clinemod_nosz.stan",data=dat,chains=n_chains,iter=2500,warmup=2000,init=init_ll)
 
 
 ## extract MCMC output
@@ -77,32 +77,32 @@ plot(oo$sc)
 ## width, on logit scale
 quantile(oo$sv,probs=c(.5,.05,.95)) ## median and 90% ETPIs
 #      50%        5%       95% 
-#0.3842060 0.3310749 0.4415410   
+#0.3851537 0.3317832 0.4434292    
 ## center, on log scale
 quantile(oo$sc,probs=c(.5,.05,.95)) ## median and 90% ETPIs
 #      50%        5%       95% 
-#0.12382429 0.02421631 0.27453649
+#0.12453559 0.04081464 0.25198452
 ## actual SDs, not model parameter and thus not dependent on soft centering
 quantile(oo$sdv,probs=c(.5,.05,.95))
 #      50%        5%       95%
 #0.3569337 0.3191611 0.3898629 
 quantile(oo$sdc,probs=c(.5,.05,.95))
 #      50%        5%       95% 
-#0.12217527 0.02386407 0.27153593 
+#0.12385397 0.04073329 0.24597546  
 
 ## check soft-centering, looks okay
 mean(as.vector(log(oo$center/(1-oo$center))))
-#[1] -0.00186017
+#[1] -0.001618147
 mean(as.vector(log10(oo$v)))
-#[1]  0.1402177
+#[1]  0.1404576
 
 ## just for fun (and maybe of later use) here are the SD on the raw parameter scale
 quantile(oo$sdrv,probs=c(.5,.05,.95))
 #     50%       5%      95% 
-#1.659731 1.294882 2.005143   
+#1.668512 1.297973 2.012010 
 quantile(oo$sdrc,probs=c(.5,.05,.95))
 #      50%        5%       95% 
-#0.030412002 0.005965191 0.066682459   
+#0.03083994 0.01017913 0.06056737 
 
 ## lets look at some clines
 ## h = hybrid index, v = width, u = center
