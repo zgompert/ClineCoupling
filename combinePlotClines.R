@@ -47,6 +47,26 @@ for(i in 1:length(ff)){
 	Nh[i]<-sum(hybrids$q > 0.1 & hybrids$q < 0.9)
 }
 
+## coupling and number of hybrids
+o<-lm(Nh ~ conds[,2])
+summary(o)
+#Coefficients:
+#            Estimate Std. Error t value Pr(>|t|)
+#(Intercept)  1692.94      22.06   76.74   <2e-16 ***
+#conds[, 2]  -1194.15      22.83  -52.30   <2e-16 ***
+#Residual standard error: 442.6 on 1138 degrees of freedom
+#Multiple R-squared:  0.7062,   Adjusted R-squared:  0.7059
+#F-statistic:  2735 on 1 and 1138 DF,  p-value: < 2.2e-16
+
+pdf("NhVsCoupling.pdf",width=6,height=4.5)
+par(mar=c(4.5,4.5,1,1))
+cm<-1.5;cl<-1.4
+cs<-alpha(c("cadetblue","firebrick"),.5)
+boxplot(Nh ~ conds[,2],col="white",pch=NA,xlab="Coupling coefficient",ylab="Number of hybrids",cex.lab=cl,cex.axis=ca)
+points(jitter(as.numeric(as.factor(conds[,2])),1.3),Nh,pch=19,col=cs[1+as.numeric(conds[,3]==0.2)])
+legend(1,500,c("0.1","0.2"),pch=19,col=cs,bty='n')
+dev.off()
+
 ## Use Nh > 10 or Nh > 50... basically we need to have actual hybrids
 library(scales)
 cs<-alpha(c("cadetblue","firebrick"),.5)
