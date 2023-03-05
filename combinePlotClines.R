@@ -55,7 +55,7 @@ summary(o)
 #(Intercept)  1692.94      22.06   76.74   <2e-16 ***
 #conds[, 2]  -1194.15      22.83  -52.30   <2e-16 ***
 #Residual standard error: 442.6 on 1138 degrees of freedom
-#Multiple R-squared:  0.7062,   Adjusted R-squared:  0.7059
+#Multiple R-squared:  0.7062,	Adjusted R-squared:  0.7059
 #F-statistic:  2735 on 1 and 1138 DF,  p-value: < 2.2e-16
 
 pdf("NhVsCoupling.pdf",width=6,height=4.5)
