@@ -142,3 +142,93 @@ for(i in kk){
 
 save(list=ls(),file="clines_Croatalus.rdat")
 
+################ macro autosomes only  ########################
+sdat<-read.table("scaffolds.txt",header=FALSE)
+auto<-grep(x=sdat[,1],"ma")
+zAnc<-grep(x=sdat[,1],"Z")
+
+autoAnc<-sort(sample(which(dp[auto] > .3 & pctMiss[auto] < .3),1000,replace=FALSE))
+
+## genotype matrix for ancestry informative SNPs for hybrids
+GhybAI<-Gint[hyb,autoAnc]
+Miss<-is.na(GhybAI)+0
+GhybAIM<-GhybAI
+GhybAIM[Miss==1]<-1
+
+############# estiamte hybrid indexes##############
+## number of loci and individuals, rows=ids
+L<-dim(GhybAI)[2];N<-dim(GhybAI)[1]
+## make data list with number of loci, number of inds, genotype matrix and parental allele freqs.
+dat<-list(L=L,N=N,G=GhybAIM,P0=P1[autoAnc],P1=P2[autoAnc],miss=Miss)
+fit_hiA<-stan("../missing_hindex.stan",data=dat)
+
+## extract posteriors for hybrid index
+hi<-extract(fit_hiA,"H")
+## point esimte
+hi_estA<-apply(hi[[1]],2,median)
+
+############ fit clines #####################
+## make data list
+dat<-list(L=L,N=N,G=GhybAIM,H=hi_estA,P0=P1[autoAnc],P1=P2[autoAnc],miss=Miss)
+## use 8 shorter chains to speed up the anlaysis
+n_chains<-8
+## helps to initialize cline parameters to reasonable values
+initf<-function(L=length(autoAnc),chain_id=1){
+	list(center=runif(L,.3,.7),v=runif(L,.9,1.1),alpha=chain_id)
+}
+init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
+
+## fit model
+fitA<-stan("../missing_clinemod_nosz.stan",data=dat,chains=n_chains,iter=1500,warmup=1000,init=init_ll)
+
+## extract MCMC output
+ooA<-extract(fitA)
+save(list=ls(),file="clines_Croatalus.rdat")
+
+zAnc<-zAnc[which(dp[zAnc] > .3 & pctMiss[zAnc] < .3)]
+
+## genotype matrix for ancestry informative SNPs for hybrids
+GhybZI<-Gint[hyb,zAnc]
+Miss<-is.na(GhybZI)+0
+GhybZIM<-GhybZI
+GhybZIM[Miss==1]<-1
+
+############# estiamte hybrid indexes##############
+## number of loci and individuals, rows=ids
+L<-dim(GhybZI)[2];N<-dim(GhybZI)[1]
+## make data list with number of loci, number of inds, genotype matrix and parental allele freqs.
+dat<-list(L=L,N=N,G=GhybZIM,P0=P1[zAnc],P1=P2[zAnc],miss=Miss)
+fit_hiZ<-stan("../missing_hindex.stan",data=dat)
+
+## extract posteriors for hybrid index
+hi<-extract(fit_hiZ,"H")
+## point esimte
+hi_estZ<-apply(hi[[1]],2,median)
+
+############ fit clines #####################
+## make data list
+dat<-list(L=L,N=N,G=GhybZIM,H=hi_estZ,P0=P1[zAnc],P1=P2[zAnc],miss=Miss)
+## use 8 shorter chains to speed up the anlaysis
+n_chains<-8
+## helps to initialize cline parameters to reasonable values
+initf<-function(L=length(zAnc),chain_id=1){
+	list(center=runif(L,.3,.7),v=runif(L,.9,1.1),alpha=chain_id)
+}
+init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
+
+## fit model
+fitZ<-stan("../missing_clinemod_nosz.stan",data=dat,chains=n_chains,iter=1500,warmup=1000,init=init_ll)
+
+## extract MCMC output
+ooZ<-extract(fitZ)
+save(list=ls(),file="clines_Croatalus.rdat")
+
+median(ooZ$sc)
+#[1] 0.9842267
+median(ooZ$sv)
+#[1] 0.2464163
+median(ooA$sc)
+#[1] 0.8692465
+median(ooA$sv)
+#[1] 0.3157499
+

@@ -207,3 +207,99 @@ mean(as.vector(log10(oo$v)))
 #[1]  0.05195956
 
 save(list=ls(),file="clines_Mus_CZ_mixed.rdat")
+
+############## autosomes only ###################################
+snps<-read.table("snps.txt",header=FALSE)
+
+## sample 1000
+Miss<-apply(is.na(Gint)==TRUE,2,mean)
+autoAnc<-sort(sample(which(dp > .3 & Miss < 0.2 & snps[,1] != "X"),1000,replace=FALSE))
+
+
+## genotype matrix for ancestry informative SNPs for hybrids
+GhybAI<-Gint[,autoAnc]
+
+## deal with missing
+Miss<-is.na(GhybAI)+0
+GhybAIM<-GhybAI
+GhybAIM[Miss==1]<-1
+
+
+############# estiamte hybrid indexes##############
+## number of loci and individuals, rows=ids
+L<-dim(GhybAI)[2];N<-dim(GhybAI)[1]
+## make data list with number of loci, number of inds, genotype matrix and parental allele freqs.
+dat<-list(L=L,N=N,G=GhybAIM,P0=P1[autoAnc],P1=P2[autoAnc],miss=Miss)
+fit_hiA<-stan("../missing_hindex.stan",data=dat)
+
+## extract posteriors for hybrid index
+hi<-extract(fit_hiA,"H")
+## point estimate
+hi_estA<-apply(hi[[1]],2,median)
+
+############ fit clines #####################
+## make data list
+dat<-list(L=L,N=N,G=GhybAIM,H=hi_estA,P0=P1[autoAnc],P1=P2[autoAnc],miss=Miss)
+## use 8 shorter chains to speed up the anlaysis
+n_chains<-8
+## helps to initialize cline parameters to reasonable values
+initf<-function(L=length(autoAnc),chain_id=1){
+        list(center=runif(L,.3,.7),v=runif(L,.9,1.1),alpha=chain_id)
+}
+init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
+
+## fit model
+fitA<-stan("../missing_clinemod_nosz.stan",data=dat,chains=n_chains,iter=1500,warmup=1000,init=init_ll)
+ooA<-extract(fitA)
+save(list=ls(),file="clines_Mus_CZ_mixed.rdat")
+
+#################### X chromosome only ########################
+Miss<-apply(is.na(Gint)==TRUE,2,mean)
+XAnc<-which(dp > .3 & Miss < 0.2 & snps[,1] == "X")
+
+## genotype matrix for ancestry informative SNPs for hybrids
+GhybXI<-Gint[,XAnc]
+
+## deal with missing
+Miss<-is.na(GhybXI)+0
+GhybXIM<-GhybXI
+GhybXIM[Miss==1]<-1
+
+
+############# estiamte hybrid indexes##############
+## number of loci and individuals, rows=ids
+L<-dim(GhybXI)[2];N<-dim(GhybXI)[1]
+## make data list with number of loci, number of inds, genotype matrix and parental allele freqs.
+dat<-list(L=L,N=N,G=GhybXIM,P0=P1[XAnc],P1=P2[XAnc],miss=Miss)
+fit_hiX<-stan("../missing_hindex.stan",data=dat)
+
+## extract posteriors for hybrid index
+hi<-extract(fit_hiX,"H")
+## point estimate
+hi_estX<-apply(hi[[1]],2,median)
+
+############ fit clines #####################
+## make data list
+dat<-list(L=L,N=N,G=GhybXIM,H=hi_estX,P0=P1[XAnc],P1=P2[XAnc],miss=Miss)
+## use 8 shorter chains to speed up the anlaysis
+n_chains<-8
+## helps to initialize cline parameters to reasonable values
+initf<-function(L=length(XAnc),chain_id=1){
+        list(center=runif(L,.3,.7),v=runif(L,.9,1.1),alpha=chain_id)
+}
+init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
+
+## fit model
+fitX<-stan("../missing_clinemod_nosz.stan",data=dat,chains=n_chains,iter=1500,warmup=1000,init=init_ll)
+ooX<-extract(fitX)
+save(list=ls(),file="clines_Mus_CZ_mixed.rdat")
+
+median(ooX$sc)
+#[1] 0.3946652
+median(ooX$sv)
+#[1] 0.1268021
+median(ooA$sc)
+#[1] 0.7273244
+median(ooA$sv)
+#[1] 0.1379132
+

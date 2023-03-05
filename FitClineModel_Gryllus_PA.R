@@ -190,5 +190,100 @@ for(i in kk){
 
 abline(a=0,b=1,lty=2)
 
-save(list=ls(),file="clines_Gryllus_CT.rdat")
+save(list=ls(),file="clines_Gryllus_PA.rdat")
+############## autosomes only ###################################
+
+autoAnc<-grep(x=snps[,2],pattern="LG")
+
+
+## genotype matrix for ancestry informative SNPs for hybrids
+GhybAI<-Gint[,autoAnc]
+
+## deal with missing
+Miss<-is.na(GhybAI)+0
+GhybAIM<-GhybAI
+GhybAIM[Miss==1]<-1
+
+
+############# estiamte hybrid indexes##############
+## number of loci and individuals, rows=ids
+L<-dim(GhybAI)[2];N<-dim(GhybAI)[1]
+## make data list with number of loci, number of inds, genotype matrix and parental allele freqs.
+dat<-list(L=L,N=N,G=GhybAIM,P0=P1[autoAnc],P1=P2[autoAnc],miss=Miss)
+fit_hiA<-stan("../missing_hindex.stan",data=dat)
+
+## extract posteriors for hybrid index
+hi<-extract(fit_hiA,"H")
+## point estimate
+hi_estA<-apply(hi[[1]],2,median)
+
+############ fit clines #####################
+## make data list
+dat<-list(L=L,N=N,G=GhybAIM,H=hi_estA,P0=P1[autoAnc],P1=P2[autoAnc],miss=Miss)
+## use 8 shorter chains to speed up the anlaysis
+n_chains<-8
+## helps to initialize cline parameters to reasonable values
+initf<-function(L=length(autoAnc),chain_id=1){
+        list(center=runif(L,.3,.7),v=runif(L,.9,1.1),alpha=chain_id)
+}
+init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
+
+## fit model
+fitA<-stan("../missing_clinemod_nosz.stan",data=dat,chains=n_chains,iter=1500,warmup=1000,init=init_ll)
+ooA<-extract(fitA)
+save(list=ls(),file="clines_Gryllus_PA.rdat")
+
+#################### X chromosome only ########################
+
+XAnc<-grep(x=snps[,2],pattern="X")
+
+## genotype matrix for ancestry informative SNPs for hybrids
+GhybXI<-Gint[,XAnc]
+
+## deal with missing
+Miss<-is.na(GhybXI)+0
+GhybXIM<-GhybXI
+GhybXIM[Miss==1]<-1
+
+
+############# estiamte hybrid indexes##############
+## number of loci and individuals, rows=ids
+L<-dim(GhybXI)[2];N<-dim(GhybXI)[1]
+## make data list with number of loci, number of inds, genotype matrix and parental allele freqs.
+dat<-list(L=L,N=N,G=GhybXIM,P0=P1[XAnc],P1=P2[XAnc],miss=Miss)
+fit_hiX<-stan("../missing_hindex.stan",data=dat)
+
+## extract posteriors for hybrid index
+hi<-extract(fit_hiX,"H")
+## point estimate
+hi_estX<-apply(hi[[1]],2,median)
+
+############ fit clines #####################
+## make data list
+dat<-list(L=L,N=N,G=GhybXIM,H=hi_estX,P0=P1[XAnc],P1=P2[XAnc],miss=Miss)
+## use 8 shorter chains to speed up the anlaysis
+n_chains<-8
+## helps to initialize cline parameters to reasonable values
+initf<-function(L=length(XAnc),chain_id=1){
+        list(center=runif(L,.3,.7),v=runif(L,.9,1.1),alpha=chain_id)
+}
+init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
+
+## fit model
+fitX<-stan("../missing_clinemod_nosz.stan",data=dat,chains=n_chains,iter=1500,warmup=1000,init=init_ll)
+ooX<-extract(fitX)
+save(list=ls(),file="clines_Gryllus_PA.rdat")
+
+
+## auto
+median(ooA$sc)
+#[1] 0.5144657
+median(ooA$sv)
+#[1] 0.1394804
+
+## X
+median(ooX$sc)
+#[1] 0.3313312
+median(ooX$sv)
+#[1] 0.1510147
 

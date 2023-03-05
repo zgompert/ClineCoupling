@@ -136,3 +136,101 @@ abline(a=0,b=1,lty=2)
 
 save(list=ls(),file="clines_Poecile.rdat")
 
+############# autosomes vs Z chromosome ################
+zScafs<-read.table("all.Z.scaffolds.txt",header=TRUE)
+snps<-fread("coupling.012.pos",header=FALSE)
+snps<-as.data.frame(snps)
+zSnps<-which(as.character(snps[,1]) %in% as.character(zScafs[,1]))
+aSnps<-c(1:9994645)[-zSnps]
+
+############ autosomes ###################
+autoAnc<-sort(sample(which(dp > .3 & pctMiss < .3 & (1:9994645) %in% aSnps),1000,replace=FALSE))
+
+
+hyb<-which(ids[,1]=="H")
+length(hyb)## 36 hybrids
+
+## genotype matrix for ancestry informative SNPs for hybrids
+GhybAI<-Gint[hyb,autoAnc]
+Miss<-is.na(GhybAI)+0
+GhybAIM<-GhybAI
+GhybAIM[Miss==1]<-1
+
+############# estiamte hybrid indexes##############
+## number of loci and individuals, rows=ids
+L<-dim(GhybAI)[2];N<-dim(GhybAI)[1]
+## make data list with number of loci, number of inds, genotype matrix and parental allele freqs.
+dat<-list(L=L,N=N,G=GhybAIM,P0=P1[autoAnc],P1=P2[autoAnc],miss=Miss)
+fit_hiA<-stan("../missing_hindex.stan",data=dat)
+
+## extract posteriors for hybrid index
+hi<-extract(fit_hiA,"H")
+## point esimte
+hi_estA<-apply(hi[[1]],2,median)
+
+############ fit clines #####################
+## make data list
+dat<-list(L=L,N=N,G=GhybAIM,H=hi_estA,P0=P1[autoAnc],P1=P2[autoAnc],miss=Miss)
+## use 8 shorter chains to speed up the anlaysis
+n_chains<-8
+## helps to initialize cline parameters to reasonable values
+initf<-function(L=length(autoAnc),chain_id=1){
+	list(center=runif(L,.3,.7),v=runif(L,.9,1.1),alpha=chain_id)
+}
+init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
+
+## fit model
+fit<-stan("../missing_clinemod_nosz.stan",data=dat,chains=n_chains,iter=1500,warmup=1000,init=init_ll)
+
+## extract MCMC output
+ooA<-extract(fit)
+### Z SNPs ###
+zAnc<-sort(sample(which(dp > .3 & pctMiss < .3 & (1:9994645) %in% zSnps),1000,replace=FALSE))
+
+
+hyb<-which(ids[,1]=="H")
+length(hyb)## 36 hybrids
+
+## genotype matrix for ancestry informative SNPs for hybrids
+GhybZI<-Gint[hyb,zAnc]
+Miss<-is.na(GhybZI)+0
+GhybZIM<-GhybZI
+GhybZIM[Miss==1]<-1
+
+############# estiamte hybrid indexes##############
+## number of loci and individuals, rows=ids
+L<-dim(GhybZI)[2];N<-dim(GhybZI)[1]
+## make data list with number of loci, number of inds, genotype matrix and parental allele freqs.
+dat<-list(L=L,N=N,G=GhybZIM,P0=P1[zAnc],P1=P2[zAnc],miss=Miss)
+fit_hiZ<-stan("../missing_hindex.stan",data=dat)
+
+## extract posteriors for hybrid index
+hi<-extract(fit_hiZ,"H")
+## point esimte
+hi_estZ<-apply(hi[[1]],2,median)
+
+############ fit clines #####################
+## make data list
+dat<-list(L=L,N=N,G=GhybZIM,H=hi_estZ,P0=P1[zAnc],P1=P2[zAnc],miss=Miss)
+## use 8 shorter chains to speed up the anlaysis
+n_chains<-8
+## helps to initialize cline parameters to reasonable values
+initf<-function(L=length(zAnc),chain_id=1){
+	list(center=runif(L,.3,.7),v=runif(L,.9,1.1),alpha=chain_id)
+}
+init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
+
+## fit model
+fit<-stan("../missing_clinemod_nosz.stan",data=dat,chains=n_chains,iter=4500,warmup=4000,init=init_ll)
+
+## extract MCMC output
+ooZ<-extract(fit)
+
+## mixing for Z is not okay, can't use the Z x autosome comparison here
+
+save(list=ls(),file="clines_Poecile.rdat")
+
+median(ooA$sv)
+#[1] 0.380031
+median(ooA$sc)
+#[1] 0.8317092
