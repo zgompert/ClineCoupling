@@ -120,11 +120,11 @@ I ran and analyzed simulated data sets to assess the effect of sampling on the i
 
 The SDs for center and slope/width are highly correlated for the two samples (Pearson correlation ~0.9), but there is a general tendency for the poorer sampling (edge sampling) to result in increased SDs for center and slope (which corresponds to lower coupling coefficients). This makes sense from theory in the sense that coupling has the biggest effect of introgression in the center of a hybrid zone (the stepped part of a geographic cline) and less of an effect as you move away from the center (as LD among foreign alleles break down... where you get exponential decay in classic mulitlocus clines). Thus, by focusing on the edges one might expect a greater SD in clines as coupling is less influential. The results are summarized in [F_SamplingEffect.pdf](https://github.com/zgompert/ClineCoupling/files/10356086/F_SamplingEffect.pdf). 
 
-Predictive power for single deme simulations...
+As an additional test, I conducted new simulations with a migration rate of 0.05 and fit clines to these, see [fitGenomicClinesM05.R](fitGenomicClinesM05.R) and [fitGeoClines05.R](fitGeoClines05.R). I then assessed how well models fit relating clines SDs to coupling for m = 0.1 and 0.2 were at predicting coupling for m = 0.05 (and other permutations). The results were okay, see [combineAnalyzeAllClines.R](combineAnalyzeAllClines.R). 
 
 # Summary of results
 
-The data sets we are working with are summarized [here](https://docs.google.com/document/d/13ojSDHTLW1YxPb16ddE27iLHJs0N7P_foxr9rGC1Vnk/edit) and are on [dropbox](https://www.dropbox.com/scl/fo/axlbcw8yhpnhy8oktpgb3/h?dl=0&rlkey=eqgxopr3ynx6ylm5vv67wr7pv). Below I am keeping track of the SD parameter estimates for the data sets that we have finished analyzing. Quick note, keep an eye on how well the soft centering is going and whether it might be necessary to account for how well it is working in the SDs (looking pretty damn good so far).
+The data sets we are working with are summarized [here](https://docs.google.com/document/d/13ojSDHTLW1YxPb16ddE27iLHJs0N7P_foxr9rGC1Vnk/edit) and are on [dropbox](https://www.dropbox.com/scl/fo/axlbcw8yhpnhy8oktpgb3/h?dl=0&rlkey=eqgxopr3ynx6ylm5vv67wr7pv). Below I am keeping track of the SD parameter estimates for the data sets that we have finished analyzing. Quick note, keep an eye on how well the soft centering is going and whether it might be necessary to account for how well it is working in the SDs (looking pretty damn good).
 
 | Organism | Subset of loci | $\sigma_c$ | $\sigma_v$ | SD $c$ | SD $v$ | $\theta$ | Script |
 |----------|----------------|------------|------------|--------|--------|---------|--------|
