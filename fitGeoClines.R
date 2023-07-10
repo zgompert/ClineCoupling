@@ -5,6 +5,7 @@ rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 library(scales)
 
+
 ff<-list.files(pattern="main$")
 nf<-length(ff)
 
@@ -169,6 +170,19 @@ summary(ocv)
 #Multiple R-squared:  0.7976,	Adjusted R-squared:  0.7971 
 #F-statistic:  1493 on 3 and 1136 DF,  p-value: < 2.2e-16
 
+cv<-abs(sig[,1]/mu[,1])
+ocv<-lm(cv ~ x*x2)
+summary(ocv)
+#             Estimate Std. Error t value Pr(>|t|)    
+#(Intercept)  0.430902   0.007390  58.311  < 2e-16 ***
+#x           -0.426290   0.012218 -34.890  < 2e-16 ***
+#x2           0.036983   0.007971   4.639 3.90e-06 ***
+#x:x2         0.033867   0.005745   5.895 4.94e-09 ***
+#Residual standard error: 0.1664 on 1136 degrees of freedom
+#Multiple R-squared:  0.7976,	Adjusted R-squared:  0.7971 
+#F-statistic:  1493 on 3 and 1136 DF,  p-value: < 2.2e-16
+
+
 
 library(scales)
 cs<-alpha(c("cadetblue","firebrick"),.5)
@@ -271,4 +285,3 @@ summary(o)
 
 
 save(list=ls(),file="geoCl.rdat")
-
