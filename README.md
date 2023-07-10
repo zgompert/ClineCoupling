@@ -120,6 +120,52 @@ I ran and analyzed simulated data sets to assess the effect of sampling on the i
 
 The SDs for center and slope/width are highly correlated for the two samples (Pearson correlation ~0.9), but there is a general tendency for the poorer sampling (edge sampling) to result in increased SDs for center and slope (which corresponds to lower coupling coefficients). This makes sense from theory in the sense that coupling has the biggest effect of introgression in the center of a hybrid zone (the stepped part of a geographic cline) and less of an effect as you move away from the center (as LD among foreign alleles break down... where you get exponential decay in classic mulitlocus clines). Thus, by focusing on the edges one might expect a greater SD in clines as coupling is less influential. The results are summarized in [F_SamplingEffect.pdf](https://github.com/zgompert/ClineCoupling/files/10356086/F_SamplingEffect.pdf). 
 
+Next (for revisions), I generated and analyzed a batch of simulations to evaluate the effect of the genetic map size (chromosome size in Morgans) on the results. For this, I used map sizes of 0.5, 1 and 2 Morgans but fewer levels of $\Theta$. here is the submission script:
+
+```perl
+#!/usr/bin/perl
+#
+#
+
+use Parallel::ForkManager;
+my $max = 40;
+my $pm = Parallel::ForkManager->new($max);
+
+@theta = (0.1,0.5,0.9,1,1.1,1.5); ## theta = s/r = coupling coefficient, not summed coupling coefficient
+
+foreach $Lfile (@ARGV){ ## unsel files
+        $Lfile =~ m/_(\d+)/ or die "failed to match number of Loci = L\n";
+        $L = $1;
+        $L2 = 2*$L;
+        $Lpt5 = 0.5 * $L; 
+        $Lfile2 = "unsel_$L2";
+        $Lfilept5 = "unsel_$Lpt5";
+        foreach $th (@theta){
+                $r = 1 / ($L-1); ## $r between neighboring loci
+                $s = $th * $r; ## theta = s/r, thus s = theta * r
+                $r2 = 1 / ($L2-1); ## $r between neighboring loci
+                $s2 = $th * $r2; ## theta = s/r, thus s = theta * r
+                $rpt5 = 1 / ($Lpt5-1); ## $r between neighboring loci
+                $spt5 = $th * $rpt5; ## theta = s/r, thus s = theta * r
+                foreach $j (0..9){ ## reps
+                        sleep 2;        
+                        $pm->start and next;
+                        $out = "o_d110_M1_L$L"."_theta$th"."_rep$j";
+                        system "~/bin/dfuse_src/dfuse1M -d demefile_110 -s $Lfile -o $out -g 2000 -c $s -G 500 -m 0.1\n";
+                        $out = "o_d110_M2_L$L2"."_theta$th"."_rep$j";
+                        system "~/bin/dfuse_src/dfuse2M -d demefile_110 -s $Lfile2 -o $out -g 2000 -c $s2 -G 500 -m 0.1\n";
+                        $out = "o_d110_Mpt5_L$Lpt5"."_theta$th"."_rep$j";
+                        system "~/bin/dfuse_src/dfusept5M -d demefile_110 -s $Lfilept5 -o $out -g 2000 -c $spt5 -G 500 -m 0.1\n";
+
+                        $pm->finish;
+                }
+        }
+}
+
+$pm->wait_all_children;
+```
+I then analyzed the plotted the results with [fitGenomicClinesMap.R](fitGenomicClinesMap.R) and [combinePlotClinesM.R](combinePlotClinesM.R). The general relationship between cline SD or number of hybrids and $\Theta$ held, but map size interacted with $\Theta$.
+
 As an additional test, I conducted new simulations with a migration rate of 0.05 and fit clines to these, see [fitGenomicClinesM05.R](fitGenomicClinesM05.R) and [fitGeoClines05.R](fitGeoClines05.R). I then assessed how well models fit relating clines SDs to coupling for m = 0.1 and 0.2 were at predicting coupling for m = 0.05 (and other permutations). The results were okay, see [combineAnalyzeAllClines.R](combineAnalyzeAllClines.R). 
 
 # Summary of results
