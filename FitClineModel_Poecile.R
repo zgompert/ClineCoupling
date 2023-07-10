@@ -221,12 +221,10 @@ initf<-function(L=length(zAnc),chain_id=1){
 init_ll <- lapply(1:n_chains, function(id) initf(chain_id = id))
 
 ## fit model
-fit<-stan("../missing_clinemod_nosz.stan",data=dat,chains=n_chains,iter=4500,warmup=4000,init=init_ll)
+fit<-stan("missing_clinemod_nosz.stan",data=dat,chains=n_chains,iter=4500,warmup=4000,init=init_ll)
 
 ## extract MCMC output
 ooZ<-extract(fit)
-
-## mixing for Z is not okay, can't use the Z x autosome comparison here
 
 save(list=ls(),file="clines_Poecile.rdat")
 
@@ -234,3 +232,18 @@ median(ooA$sv)
 #[1] 0.380031
 median(ooA$sc)
 #[1] 0.8317092
+median(ooZ$sv)
+#[1] 0.4260208
+median(ooZ$sc)
+#[1] 2.580649
+
+## soft centering on Auto vs Z
+## check soft-centering, looks okay except center on Z 
+mean(as.vector(log(ooA$center/(1-ooA$center))))
+#0.05562318
+mean(as.vector(log10(ooA$v)))
+#0.146796
+mean(as.vector(log(ooZ$center/(1-ooZ$center))))
+#  0.537978
+mean(as.vector(log10(ooZ$v)))
+# 0.1861666
